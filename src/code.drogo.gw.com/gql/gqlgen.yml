@@ -1,0 +1,39 @@
+schema: schema.graphql
+
+exec:
+  filename: generated.go
+  package: gql
+
+model:
+  filename: models_gen.go
+  package: gql
+
+models:
+  Category:
+    model: code.drogo.gw.com/database.Category
+  Response:
+    model: code.drogo.gw.com/database.Response
+  Ticket:
+    model: code.drogo.gw.com/database.Ticket
+  EventType:
+    model: code.drogo.gw.com/database.EventType
+  OrganizerProfile:
+    model: code.drogo.gw.com/database.OrganizerProfile
+  OrganizerData:
+    model: code.drogo.gw.com/database.OrganizerData
+  Position:
+    model: code.drogo.gw.com/database.Position
+  User:
+    model: code.drogo.gw.com/database.User
+  Event:
+    model: code.drogo.gw.com/database.Event
+  Interest:
+    model: code.drogo.gw.com/database.Interest
+  Payout:
+    model: code.drogo.gw.com/database.Payout
+  Region:
+    model: code.drogo.gw.com/database.Region
+  EventsOverview:
+    model: code.drogo.gw.com/database.EventsOverview
+  Attendee:
+    model: code.drogo.gw.com/database.Attendee

@@ -1,0 +1,220 @@
+syntax = "proto3";
+package event;
+message EventDetail {
+    string id = 1;
+    string name = 2;
+    string brief_description = 3;
+    string start_date = 4;
+    string start_time = 5;
+    string end_date = 6;
+    string end_time = 7;
+    string venue_name = 8;
+    string address = 9;
+    string address_2 = 10;
+    string venue_city = 11;
+    string venue_country = 12;
+    string venue_state = 13;
+    string cover_image_upload_id = 15;
+    string title = 16;
+    string detailed_description = 17;
+    string event_tags = 19;
+    string mysql_id = 20;
+    string user_id = 21;
+    string start_timestamp = 22;
+    string end_timestamp = 23;
+    string timezone = 24;
+    string zone = 25;
+    bool is_featured = 26;
+    string created_on = 27;
+    repeated string keywords = 28;
+    string allow_sponsor_enquires = 29;
+    string allow_exhibitor_enquires = 30;
+    string allow_brochure_enquires = 31;
+    string cover_image_thumbnail_upload_id = 32;
+    string floor_plan_upload_id = 33;
+    string event_video=34;
+}
+message Organizer {
+    string name = 1;
+    string description = 2;
+    string website = 3;
+    string id = 4;
+    string status = 5;
+    string upload_id = 6;
+    double et_commision_rate = 7;
+}
+message Tax {
+    string tax_name = 1;
+    string tax_rate = 2;
+    string tax_id = 3;
+    string country_name = 4;
+    string should_add_tax = 5;
+    bool include_tax=6;
+}
+message Ticket {
+    string name = 1;
+    int32 quantity = 2;
+    double price = 3;
+    string currency = 4;
+    string start_date = 5;
+    string start_time = 6;
+    string end_date = 7;
+    string end_time = 8;
+    string allow_visitor_registrations = 9;
+    int32 sold = 10;
+    string start_timestamp = 11;
+    string end_timestamp = 12;
+    string timezone = 13;
+    string zone = 14;
+}
+message Schedule {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    string startEndDate = 4;
+    string speaker = 5;
+    string venue = 6;
+    string scheduleTitle = 7;
+}
+message Speaker {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string position = 4;
+    string company = 5;
+    string description = 6;
+    string upload_id = 7;
+}
+message Exhibitor {
+    string id = 1;
+    string company = 2;
+    string boothNumber = 3;
+    string website = 4;
+    string category = 5;
+    string description = 6;
+    string upload_id = 7;
+}
+message Sponsor {
+    string id = 1;
+    string company = 2;
+    string website = 3;
+    string email = 4;
+    string upload_id = 5;
+}
+message Partner {
+    string id = 1;
+    string company = 2;
+    string email = 3;
+    string website = 4;
+    string upload_id = 6;
+}
+message MobileApp {
+    string amenities = 1;
+    string help = 2;
+}
+message Event {
+    EventDetail eventDetail = 1;
+    Organizer organizer = 2;
+    Tax tax = 3;
+    Ticket ticket = 4;
+    repeated Speaker speakers = 5;
+    repeated Exhibitor exhibitors = 6;
+    repeated Sponsor sponsors = 7;
+    repeated Partner partners = 8;
+    repeated Schedule schedule = 9;
+    repeated string categories = 10;
+    repeated string interests = 11;
+    repeated string attendees = 12;
+    repeated string eventTypes = 13;
+    string status = 14;
+    string is_in_wishlist = 15;
+    Coordinates coordinates = 16;
+    MobileApp mobileApp = 17;
+    string is_featured = 18;
+    bool Deactivated = 19;
+}
+message Coordinates {
+    double lat = 1;
+    double lon = 2;
+}
+message Response {
+    string status = 1;
+    string arangoID = 2;
+    string elasticId = 3;
+}
+message RollbackRequest {
+    string arangoId = 1;
+    string elasticId = 2;
+}
+message RollbackReponse {
+    string status = 1;
+}
+message EventItem {
+    string id = 1;
+    string name = 2;
+    string start_date = 3;
+    string start_time = 4;
+    string end_date = 5;
+    string venue_name = 6;
+    string venue_city = 7;
+    string venue_country = 8;
+    string currency = 9;
+    double price = 10;
+    string visitor_registration = 11;
+    string cover_image_upload_id = 12;
+    string status = 13;
+    string zone = 14;
+    string timezone = 15;
+    string end_time = 16;
+    int32 tickets = 17;
+    int32 sold = 18;
+}
+message ManageEventResponse {
+    string name = 1;
+    string start_date = 2;
+    string start_time = 3;
+    double price = 4;
+    int32 sold = 5;
+    int32 quantity = 6;
+    string venue_name = 7;
+    string venue_city = 8;
+    string cover_image_upload_id = 9;
+    string currency = 10;
+    string allow_visitor_registrations = 11;
+    string status = 12;
+    int32 visitors = 13;
+    string ticket_start_time = 14;
+    string ticket_start_date = 15;
+    string ticket_end_time = 16;
+    string ticket_end_date = 17;
+    string time_zone = 18;
+    string event_status = 19;
+}
+message EventRequest {
+    string event_id = 1;
+    string user_id = 2;
+}
+message UpdateRequest {
+    string event_id = 1;
+    Event event = 2;
+}
+message UpdateResponse {
+    string status = 1;
+}
+message AnyResponse {
+    string status = 1;
+    string message = 2;
+}
+message UpdateFeaturedRequest {
+    string event_id = 1;
+    string featured = 2;
+}
+service EventService {
+    rpc CreateEvent (Event) returns (Response);
+    rpc Rollback (RollbackRequest) returns (RollbackReponse);
+    rpc GetEventsByUserId (EventRequest) returns (stream EventItem);
+    rpc GetEventById (EventRequest) returns (Event);
+    rpc UpdateEventById (UpdateRequest) returns (UpdateResponse);
+    rpc ManageEventById (EventRequest) returns (ManageEventResponse);
+    rpc UpdateFeaturedEventById (UpdateFeaturedRequest) returns (UpdateResponse);
+}

@@ -1,0 +1,132 @@
+syntax = "proto3";
+package mail;
+message AttendeeConfirmationDetail {
+    string name = 1;
+    string eventURL = 2;
+    string eventName = 3;
+    string eventCoverImage = 4;
+    string eventDateTime = 5;
+    string eventFullVenue = 6;
+    string eventOrganizerCompany = 7;
+    string confirmationURL = 8;
+    string emailId = 9;
+}
+message AnyResponse {
+    string status = 1;
+    string message = 2;
+}
+message ForgotPasswordRequest {
+    string id = 1;
+    string emailId = 2;
+}
+message ForgotPasswordResponse {
+    string status = 1;
+    string resetToken = 2;
+}
+message Email {
+    string emailId = 1;
+}
+message VisitorDetail {
+    string name = 1;
+    string eventURL = 2;
+    string eventName = 3;
+    string eventCoverImage = 4;
+    string eventDateTime = 5;
+    string eventFullVenue = 6;
+    string eventOrganizerCompany = 7;
+    repeated double coordinates = 8;
+    string emailId = 9;
+}
+message ReminderRequestDetail {
+    string name = 1;
+    string eventURL = 2;
+    string eventName = 3;
+    string eventCoverImage = 4;
+    string eventDateTime = 5;
+    string eventFullVenue = 6;
+    string eventOrganizerCompany = 7;
+    string printTicketURL = 8;
+    int32 daysToStart = 9;
+    repeated double coordinates = 10;
+    string emailId = 11;
+}
+message PublishedRequestDetail {
+    string name = 1;
+    string eventURL = 2;
+    string eventName = 3;
+    string eventCoverImage = 4;
+    string eventDateTime = 5;
+    string eventFullVenue = 6;
+    string organizerId = 7;
+}
+message TicketRequestDetail {
+    string userId = 1;
+    string ticketId = 2;
+}
+message AbandonedRequestDetail {
+    string name = 1;
+    string eventName = 3;
+    string eventCoverImage = 4;
+    string eventDateTime = 5;
+    string eventFullVenue = 6;
+    string eventOrganizerCompany = 7;
+    string checkoutURL = 8;
+    int32 ticketAmount = 10;
+    repeated double coordinates = 2;
+    string emailId = 9;
+}
+message ConfirmationRequestDetail {
+    string  name = 1;
+    string  ticketNumber = 6;
+    string  ticketPurchaseDate = 8;
+    int32  ticketAmount = 9;
+    string emailId = 11;
+}
+message CreationRequestDetail {
+    string organizerName = 1;
+    string emailId = 2;
+}
+message EnquiryRequest {
+    string organizerId = 1;
+    string  name = 2;
+    string  phone = 3;
+    string  company = 4;
+    string  jobTitle = 5;
+    string  email = 6;
+    string  companyWebsite = 7;
+    string  comments = 8;
+    string eventId = 9;
+    string enquiryType = 10;
+    string eventName = 11;
+}
+message BrochureRequest {
+    string organizerId = 1;
+    string name = 2;
+    string phone = 3;
+    string company = 4;
+    string email = 5;
+    string companyWebsite = 6;
+    string comments = 7;
+    string address1 = 8;
+    string address2 = 9;
+    string city  = 10;
+    string country = 11;
+    string eventId = 12;
+    string eventName = 13;
+}
+service MailService {
+    rpc ConfirmAttendee (AttendeeConfirmationDetail) returns (AnyResponse);
+    rpc ForgotPassword (ForgotPasswordRequest) returns (ForgotPasswordResponse);
+    rpc WelcomeEmail (Email) returns (AnyResponse);
+    rpc VisitorEmail (VisitorDetail) returns (AnyResponse);
+    rpc ReminderEmail (ReminderRequestDetail) returns (AnyResponse);
+    rpc PublishedEmail (PublishedRequestDetail) returns (AnyResponse);
+    rpc TicketEmail (TicketRequestDetail) returns (AnyResponse);
+    rpc AbandonedEmail (AbandonedRequestDetail) returns (AnyResponse);
+    rpc ConfirmationEmail (ConfirmationRequestDetail) returns (AnyResponse);
+    rpc ApprovalEmail (CreationRequestDetail) returns (AnyResponse);
+    rpc CreationEmail (CreationRequestDetail) returns (AnyResponse);
+    rpc SponsorEnquiryEmail (EnquiryRequest) returns (AnyResponse);
+    rpc ExhibitorEnquiryEmail (EnquiryRequest) returns (AnyResponse);
+    rpc BrochureRequestEmail (BrochureRequest) returns (AnyResponse);
+}

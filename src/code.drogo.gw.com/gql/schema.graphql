@@ -1,0 +1,214 @@
+# Response is a generic response from a graphql query or mutation
+type Response {
+    status: Boolean!
+    message: String!
+}
+
+type Category {
+    id: ID!
+    name: String!
+    description: String!
+    noOfEvents: Int!
+    imageData: String
+    imageSize: String
+}
+
+type OrganizerProfile {
+    id: ID!
+    name: String!
+    userFirstName: String!
+    description: String!
+    website: String!
+    status: String!
+    bankId: ID!
+    billingId: ID!
+    uploadId: ID
+    userId: ID!
+    agreementUploadId: String!
+    isActive: Int!
+    etEarnings: Float!
+    revenue: Float!
+    totalEtEarning: String!
+    revenueGenerated: String!
+    etCommission: Float!
+    eventsCount: Int!
+    etNotes: String!
+}
+
+type Event {
+    id: ID!
+    name: String!
+    imageData: String!
+    startDate: String!
+    startTime: String!
+    endDate:   String!
+    endTime: String!
+    description: String!
+    location: String!
+    organizerName: String!
+    organizerId: ID!
+    userName: String!
+    status: String!
+    publishDate: String!
+    types: [String!]!
+    categories: [String!]!
+    soldAmount: Float!
+    ticketsSold: Int!
+    isFeatured: Boolean!
+    venueCity: String!
+    organizerID: ID!
+    revenue: Float!
+    totalRevenue: String!
+    ticketLiveDays: Int!
+    pageHits: Int!
+    deactivated: Boolean!
+    currency: String!
+}
+
+type Ticket {
+   orderNo: String!
+   purchasedBy: String!
+   noOfTickets: Int!
+   eventId: ID!
+   eventName: String!
+}
+
+type User {
+    userId: String!
+    userName: String!
+    email: String!
+    organization: String!
+    location: String
+    isOrganizer: Boolean!
+    salutation: String!
+    mobileNumber: String!
+    imageUploadId: String
+
+}
+
+type Position {
+    id: Int!
+    name: String!
+    noOfEvents: Int!
+    description: String
+}
+
+type EventType {
+    id: Int!
+    name: String!
+    description: String
+    noOfEvents: Int!
+}
+
+type Interest {
+    id: Int!
+    name: String!
+    noOfEvents: Int!
+    description: String
+}
+
+type Payout {
+    id: ID!
+    name: String!
+    endDate: String!
+    sold: Int!
+    saleAmount: Float!
+    totalSaleAmount: String!
+    taxAmount: Float!
+    totalTaxAmount: String!
+    etShare: Float!
+    totalEtShare: String!
+    payoutAmount: Float!
+    totalPayoutAmount: String!
+    status: String!
+}
+
+type OrganizerData {
+    agreementId: String!
+    uploadId: String!
+    organizerProfile: OrganizerProfile!
+    userProfile: User!
+}
+
+type Region {
+    id: Int!
+    name: String!
+    noOfEvents: Int!
+}
+
+type EventsOverview {
+    eventsHeld: Int!
+    ticketsSold: Int!
+    revenue: Float!
+    totalRevenue: String!
+}
+
+type Attendee {
+    attendee: [String!]
+    eventName: String
+    organizerName: String!
+}
+
+type Query {
+    getCategories(offset: Int!): [Category!]
+    getCategoryById(id: ID!): Category!
+    getEventList(offset: Int!): [Event!]
+    getOngoingEvents(offset: Int!): [Event!]
+    getTopEvents(duration: String!): [Event!]
+    getEventById(id: ID!): Event!
+    getTicketList(offset: Int!): [Ticket]!
+    getUserList(offset: Int!): [User!]
+    getEventTypeById(id: Int!): EventType!
+    getPositionByID(id: Int!): Position!
+    getOrganizerByID(id: ID!): OrganizerData!
+    getOrganizersEventList(id: ID!, offset: Int!): [Event!]
+    getInterestByID(id: Int!): Interest!
+    getPayoutDetails(offset: Int!): [Payout!]
+    getRegionByID(id: Int!): Region!
+    getUserProfilesCount: Int!
+    getOrganizerProfilesCount: Int!
+    getTotalEventsCreated: Int!
+    getRecentEvents: [Event!]
+    totalEtEarnings: String!
+    getEventAttendees(eventId: String!, organizerId: String!, offset: Int!): [Attendee!]
+    getApprovedOrganizersList: [OrganizerProfile!]
+    getGlobalEtCommissionRate: Float!
+    getOrganizersReport(offset: Int!): [OrganizerProfile!]
+    getEventPageHitsByID(eventId: String!): Int!
+    listOfInterests(offset: Int!): [Interest!]
+    listEventTypes(offset: Int!): [EventType!]
+    listPositions(offset: Int!): [Position!]
+    listRegions(offset: Int!): [Region!]
+    reportsEventList(id: String!): [Event!]
+    organizerProfileList(status: String!, offset: Int!): [OrganizerProfile!]
+    upcomingPayouts(offset: Int!, limit: Int!): [Payout!]
+    totalRevenueGenerated: String!
+    getEventsOverview: EventsOverview!
+    getEventSpecificReport(id: ID!): Event!
+    exhibitorEnquiriesCount(eventID: String!): Int!
+    sponsorEnquiriesCount(eventID: String!): Int!
+    totalBrochureRequests(eventID: String!): Int!
+}
+
+type Mutation {
+    activateEventByID(eventID: String!): Response!
+    changeOrganizersStatus(organizerId: String!, status:Int!, value: Boolean!): Response!
+    createCategory(name: String!, description: String!, imageSize: String!, imageData: String!): Response!
+    editCategory(id: ID!, newName: String!, newDescription: String!, imageSize: String!, imageData: String!): Response!
+    updateFeaturedEvent(id: ID!, feature: Boolean!): Response!
+    approveOrganizer(id: String!, organizer: String!, email: String!): Response!
+    createNewEventType(eventTypeName: String!, desc: String!): Response!
+    createNewJobPosition(name: String!, desc: String!): Response!
+    createAreaOfInterest(name: String!, desc: String!): Response!
+    createNewRegion(name:String!): Response!
+    deactivateEventByID(eventID: String!): Response!
+    markAsPaidByEventId(eventId: String!): Response!
+    rejectOrganizerByID(id: ID!, reason: String!, desc: String!): Response!
+    updateJobPositionById(id: Int!, name: String!, desc: String!): Response!
+    updateAreaOfInterest(id: Int!, name: String!, desc: String!): Response!
+    updateRegionByID(id: Int!, name:String!): Response!
+    updateOrganizer(description: String!, website: String!, agreement_uid: String!, o_id: String!, fname: String!, lname: String!, salutation: String!, mobile: String!, blogUrl: String!, user_id: String!, etCommission: Float!, etNotes: String!): Response!
+    updateEventType(id: Int!, eventTypeName: String!, desc: String!): Response!
+    updateGlobalEtCommissionRate(etCommission: Float!): Response!
+    updateEventEtCommission(eventId: String!, etCommission: Float!): Response!
+}
